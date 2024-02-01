@@ -4,12 +4,9 @@ import 'package:app_login_flutter/constant/constants.dart';
 import 'package:app_login_flutter/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, required this.title});
-
-  final String title;
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -40,26 +37,18 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (response.statusCode == 200) {
-      // Extract the token from the response body
-      final token = jsonDecode(response.body)['accessToken'];
+      print('Login efetuado com sucesso!');
 
-      // Decode the token to get the user information
-      //final Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-
-      // TODO: Save the token and user information for future use
-
-      // Navigate to the home screen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
-      // Failed login
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Falha'),
-          content: const Text('Usuário e/ou senha incorretos'),
+          content: const Text('Usuário e/ou senha incorretos!'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
@@ -80,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
